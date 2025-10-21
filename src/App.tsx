@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import Ladybug from './components/Ladybug';
-import { Direction } from './components/Ladybug';
+import type { Direction } from './components/Ladybug';
 
 const STEP_SIZE = 25;
 
-export const App: React.FC = () => {
+export const App = () => {
   const [posX, setPosX] = useState<number>(100);
   const [posY, setPosY] = useState<number>(100);
-  const [orientation, setOrientation] = useState<Direction>(Direction.right);
+  const [orientation, setOrientation] = useState<Direction>('right');
 
   const handleKeyUp = ({ code }:React.KeyboardEvent<HTMLDivElement>) => {
     if (code === 'ArrowUp') {
-      setOrientation(Direction.up);
+      setOrientation('up');
       setPosX(posX - STEP_SIZE);
     } else if (code === 'ArrowLeft') {
-      setOrientation(Direction.left);
+      setOrientation('left');
       setPosY(posY - STEP_SIZE);
     } else if (code === 'ArrowRight') {
-      setOrientation(Direction.right);
+      setOrientation('right');
       setPosY(posY + STEP_SIZE);
     } else if (code === 'ArrowDown') {
-      setOrientation(Direction.down);
+      setOrientation('down');
       setPosX(posX + STEP_SIZE);
     }
   };
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
       className="field"
       onKeyDown={handleKeyUp}
     >
-      <header>Click anywhere to start the game</header>
+      <header>Kliknutím kamkoliv začneš hru</header>
       <Ladybug posX={posX} posY={posY} orientation={orientation} />
     </div>
   );

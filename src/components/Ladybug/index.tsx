@@ -1,20 +1,14 @@
 import './style.css';
 
-export enum Direction {
-  up = 'up',
-  right = 'right',
-  down = 'down',
-  left = 'left'
-}
+export type Direction = 'up' | 'right' | 'down' | 'left';
 
-interface ILadybug
-{
+interface LadybugProps {
   posX: number;
   posY: number;
   orientation: Direction;
 }
 
-export const Ladybug : React.FC<ILadybug> = ({ posX, posY, orientation }) => {
+export const Ladybug = ({ posX, posY, orientation }: LadybugProps) => {
   return (
     <div
       className={`ladybug ladybug--${orientation}`}
