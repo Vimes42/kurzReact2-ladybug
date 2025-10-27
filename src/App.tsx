@@ -1,27 +1,32 @@
 import { useState } from 'react';
 import Ladybug from './components/Ladybug';
-import type { Direction } from './components/Ladybug';
 
 const STEP_SIZE = 25;
 
+
+
 export const App = () => {
-  const [posX, setPosX] = useState<number>(100);
-  const [posY, setPosY] = useState<number>(100);
-  const [orientation, setOrientation] = useState<Direction>('right');
+  interface LadybugProps {
+    posX: number,
+    posY: number,
+    orientation: 'up' | 'right' | 'down' | 'left',
+}
+
+  const [ladybugState, setLadybugState] = useState<LadybugProps>({
+      posX: 100,
+      posY: 100,
+      orientation: 'right',
+});
 
   const handleKeyUp = ({ code }:React.KeyboardEvent<HTMLDivElement>) => {
     if (code === 'ArrowUp') {
-      setOrientation('up');
-      setPosX(posX - STEP_SIZE);
+      setLadybugState({...ladybugState, orientation: 'up', posX: ladybugState.posX - STEP_SIZE});
     } else if (code === 'ArrowLeft') {
-      setOrientation('left');
-      setPosY(posY - STEP_SIZE);
+      setLadybugState({...ladybugState, orientation: 'left', posY: ladybugState.posY - STEP_SIZE});
     } else if (code === 'ArrowRight') {
-      setOrientation('right');
-      setPosY(posY + STEP_SIZE);
+      setLadybugState({...ladybugState, orientation: 'right', posY: ladybugState.posY + STEP_SIZE});
     } else if (code === 'ArrowDown') {
-      setOrientation('down');
-      setPosX(posX + STEP_SIZE);
+      setLadybugState({...ladybugState, orientation: 'down', posX: ladybugState.posX + STEP_SIZE});
     }
   };
 
@@ -30,9 +35,10 @@ export const App = () => {
       tabIndex={-1}
       className="field"
       onKeyDown={handleKeyUp}
+      autoFocus
     >
       <header>Kliknutím kamkoliv začneš hru</header>
-      <Ladybug posX={posX} posY={posY} orientation={orientation} />
+      <Ladybug ladybugProp={ladybugState} />
     </div>
   );
 };
